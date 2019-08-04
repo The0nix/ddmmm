@@ -57,7 +57,7 @@ async def check_players():
             new_players_msg = \
                 'Players joined the server: {}\n{} currently playing'.format(','.join(new_players), player_count)
             gone_players_msg = \
-                'Players left the server: {}\n{} currently playing'.format(','.join(gone_players),player_count)
+                'Players left the server: {}\n{} currently playing'.format(','.join(gone_players), player_count)
             for channel_filename in os.listdir(CHANNELS_DIR):
                 with open(os.path.join(CHANNELS_DIR, channel_filename), 'rb') as f:
                     channel = pickle.load(f)
