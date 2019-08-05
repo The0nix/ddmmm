@@ -4,16 +4,12 @@ import pickle
 import logging
 
 import discord
-from valve.source import NoResponseError, a2s
+from valve.source import NoResponseError
+
+from utils import TOKEN, CHANNELS_DIR, get_players, get_players_info
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(process)d] [%(levelname)s] [%(name)s] %(message)s')
 logger = logging.getLogger(__name__)
-
-CHANNELS_DIR = 'channels'
-
-TOKEN = os.environ['DDMMM_TOKEN']
-SERVER_IP = os.environ['DDMMM_SERVER_IP']
-SERVER_PORT = int(os.environ['DDMMM_SERVER_PORT'])
 
 HELP_MESSAGE = \
 """Available commands:
@@ -24,22 +20,6 @@ HELP_MESSAGE = \
 !help - show this help message"""
 
 client = discord.Client()
-
-
-async def get_players():
-    with a2s.ServerQuerier((SERVER_IP, SERVER_PORT)) as server:
-        info = server.info()
-        player_count = info['player_count']
-        max_players = info['max_players']
-        return player_count, max_players
-
-
-async def get_players_info():
-    with a2s.ServerQuerier((SERVER_IP, SERVER_PORT)) as server:
-        players = server.players()
-        player_count = players['player_count']
-        players_names = [player['name'] for player in players['players']]
-        return player_count, players_names
 
 
 @client.event
@@ -90,7 +70,6 @@ async def on_message(message):
     elif message.content.startswith('!help'):
         msg = HELP_MESSAGE
         await client.send_message(message.channel, msg)
-
 
 
 @client.event
