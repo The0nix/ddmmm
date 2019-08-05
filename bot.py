@@ -17,8 +17,8 @@ SERVER_PORT = int(os.environ['DDMMM_SERVER_PORT'])
 
 HELP_MESSAGE = \
 """Available commands:
-!players - show number of players on the server
-!players_info - show names of players on the server
+!online - show number of players on the server
+!players - show names of players on the server
 !sub - subscribe channel to players join notifications
 !sub - unsubscribe channel from players join notifications
 !help - show this help message"""
