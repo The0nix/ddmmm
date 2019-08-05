@@ -15,8 +15,8 @@ HELP_MESSAGE = \
 """Available commands:
 !online - show number of players on the server
 !players - show names of players on the server
-!sub - subscribe channel to players join notifications
-!sub - unsubscribe channel from players join notifications
+!sub - subscribe channel to players joining notifications
+!unsub - unsubscribe channel from players joining notifications
 !help - show this help message"""
 
 client = discord.Client()
