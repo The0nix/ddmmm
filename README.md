@@ -17,4 +17,5 @@ To launch the bot you must first set the following environment variables:
 * `DDMMM_TOKEN` — Discord bot token
 * `DDMMM_SERVER_IP` — Dark Messiah server ip
 * `DDMMM_SERVER_PORT` — Dark Messiah server port
+
 Then you run both `bot.py` and `monitor.py` files
