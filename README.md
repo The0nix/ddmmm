@@ -1,7 +1,7 @@
 # Discord bot for monitoring Dark Messiah of Might & Magic server status
 
 ## Requirements
-This project requires python3 < 3.6 because of backwards incompatible asyncio changes in python 3.7
+This project requires python3 < 3.7 because of backwards incompatible asyncio changes in python 3.7
 
 ## Available commands
 The bot currently supports following commands:
