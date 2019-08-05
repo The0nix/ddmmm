@@ -38,7 +38,7 @@ async def send_stats():
     await client.send_message(channel, msg)
 
 
-async def check_players():
+async def check_players(send=True):
     global current_players_names
     try:
         player_count, players_names = await get_players_info()
@@ -49,15 +49,14 @@ async def check_players():
         logger.error('BrokenMessageError')
         return
     players_names = set(players_names)
-    if players_names != current_players_names:
+    if send and players_names != current_players_names:
         new_players = players_names - current_players_names
         gone_players = current_players_names - players_names
-        current_players_names = players_names
         if new_players or gone_players:
             new_players_msg = \
-                'Players joined the server: {}\n{} currently playing'.format(','.join(new_players), player_count)
+                '{} joined the server\n{} currently playing'.format(','.join(new_players), player_count)
             gone_players_msg = \
-                'Players left the server: {}\n{} currently playing'.format(','.join(gone_players), player_count)
+                '{} left the server\n{} currently playing'.format(','.join(gone_players), player_count)
             for channel_filename in os.listdir(CHANNELS_DIR):
                 with open(os.path.join(CHANNELS_DIR, channel_filename), 'rb') as f:
                     channel = pickle.load(f)
@@ -65,12 +64,14 @@ async def check_players():
                     await client.send_message(channel, new_players_msg)
                 if gone_players:
                     await client.send_message(channel, gone_players_msg)
+    current_players_names = players_names
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()
     logger.info('Starting bot')
     loop.run_until_complete(client.login(TOKEN))
     logger.info('Starting notifications monitoring')
+    loop.run_until_complete(check_players(send=False))
     try:
         while True:
             loop.run_until_complete(check_players())

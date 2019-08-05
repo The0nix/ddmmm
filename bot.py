@@ -48,7 +48,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('!players_info'):
+    if message.content.startswith('!players'):
         try:
             player_count, players = await get_players_info()
         except NoResponseError:
@@ -60,7 +60,7 @@ async def on_message(message):
                     '\n'.join(players)
                 )
         await client.send_message(message.channel, msg)
-    elif message.content.startswith('!players'):
+    elif message.content.startswith('!online'):
         try:
             player_count, max_players = await get_players()
         except NoResponseError:
