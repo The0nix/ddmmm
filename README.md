@@ -1,5 +1,7 @@
 # Discord bot for monitoring Dark Messiah of Might & Magic server status
 
+Bot link: https://discordapp.com/api/oauth2/authorize?client_id=607554062463795201&permissions=2048&scope=bot
+
 ## Requirements
 This project requires python3 < 3.7 because of backwards incompatible asyncio changes in python 3.7
 
