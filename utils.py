@@ -1,6 +1,7 @@
 import os
 
 from valve.source import a2s, NoResponseError
+from valve.source.messages import BrokenMessageError
 
 SEPARATOR = ','
 
@@ -20,7 +21,7 @@ async def get_players():
         with a2s.ServerQuerier((ip, port)) as server:
             try:
                 info = server.info()
-            except NoResponseError:
+            except (NoResponseError, BrokenMessageError):
                 info = {'player_count': None, 'max_players': None}
             counts.append((info['player_count'], info['max_players']))
     return counts
@@ -32,7 +33,7 @@ async def get_players_info():
         with a2s.ServerQuerier((ip, port)) as server:
             try:
                 players = server.players()
-            except NoResponseError:
+            except (NoResponseError, BrokenMessageError):
                 players = {'player_count': None, 'players': []}
             players_info.append((players['player_count'],
                                 [player['name'] for player in players['players']]))

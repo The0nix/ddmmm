@@ -27,6 +27,9 @@ async def send_stats():
 async def check_players(send=True):
     global current_players_names
     for server_name, (player_count, players_names) in zip(SERVER_NAMES, await get_players_info()):
+        if player_count is None:
+            logger.info('Couldn\'t connect to server')
+            continue
         players_names = set(players_names)
         if send and players_names != current_players_names[server_name]:
             new_players = players_names - current_players_names[server_name]
