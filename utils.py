@@ -6,9 +6,9 @@ from valve.source.messages import BrokenMessageError
 SEPARATOR = ','
 
 TOKEN = os.environ['DDMMM_TOKEN']
+SERVER_NAMES = os.environ['DDMMM_SERVER_NAMES'].split(SEPARATOR)
 SERVER_IPS = os.environ['DDMMM_SERVER_IPS'].split(SEPARATOR)
 SERVER_PORTS = [int(port) for port in os.environ['DDMMM_SERVER_PORTS'].split(SEPARATOR)]
-SERVER_NAMES = ['EU Server', 'US Server']
 assert len(SERVER_IPS) == len(SERVER_PORTS) == len(SERVER_NAMES)
 SERVERS = list(zip(SERVER_NAMES, SERVER_IPS, SERVER_PORTS))
 
