@@ -5,15 +5,16 @@ import pickle
 
 import discord
 
-from utils import TOKEN, CHANNELS_DIR, SERVER_NAMES, get_players, get_players_info
+from utils import TOKEN, CHANNELS_DIR, SERVER_NAMES, SERVER_IPS, SERVER_PORTS, get_players, get_players_info
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s] [%(process)d] [%(levelname)s] [%(name)s] %(message)s')
 logger = logging.getLogger(__name__)
 
 HELP_MESSAGE = \
 """Available commands:
-!online - show number of players on the server
-!players - show names of players on the server
+!online - show number of players on servers
+!players - show names of players on servers
+!ip - show IPs of servers
 !sub - subscribe channel to players joining notifications
 !unsub - unsubscribe channel from players joining notifications
 !help - show this help message"""
@@ -44,9 +45,14 @@ async def on_message(message):
         msgs = []
         for server_name, (player_count, max_players) in zip(SERVER_NAMES, await get_players()):
             if player_count is None:
-                msgs.append('Couldn\'t reach the server')
+                msgs.append('Couldn\'t reach {}'.format(server_name))
             else:
                 msgs.append('{}: {}/{} players online'.format(server_name, player_count, max_players))
+        await client.send_message(message.channel, '\n'.join(msgs))
+    elif message.content.startswith('!ip'):
+        msgs = []
+        for server_name, server_ip, server_port in zip(SERVER_NAMES, SERVER_IPS, SERVER_PORTS):
+            msgs.append('{}:\t{}:{}'.format(server_name, server_ip, server_port))
         await client.send_message(message.channel, '\n'.join(msgs))
     elif message.content.startswith('!sub'):
         os.makedirs(CHANNELS_DIR, exist_ok=True)
